@@ -321,8 +321,12 @@ public class Context extends PropertyHolder {
     //
 
     private List<IntrospectedTable> introspectedTables;
+    
+    public List<IntrospectedTable> getIntrospectedTables() {
+		return introspectedTables;
+	}
 
-    public int getIntrospectionSteps() {
+	public int getIntrospectionSteps() {
         int steps = 0;
 
         steps++; // connect to database

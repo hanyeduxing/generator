@@ -114,7 +114,7 @@ public class ShellRunner {
             ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
                     : null;
 
-            myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables);
+            myBatisGenerator.generate(progressCallback, contexts, fullyqualifiedTables, false);
 
         } catch (XMLParserException e) {
             writeLine(getString("Progress.3")); //$NON-NLS-1$

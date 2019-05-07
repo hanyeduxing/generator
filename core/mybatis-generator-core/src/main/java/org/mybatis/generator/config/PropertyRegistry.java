@@ -55,6 +55,11 @@ public class PropertyRegistry {
     public static final String CONTEXT_JAVA_FORMATTER = "javaFormatter"; //$NON-NLS-1$
     public static final String CONTEXT_XML_FORMATTER = "xmlFormatter"; //$NON-NLS-1$
     public static final String CONTEXT_TARGET_JAVA8 = "targetJava8"; //$NON-NLS-1$
+    public static final String CONTEXT_BASE_PACKAGE = "basePackage"; //$NON-NLS-1$
+    public static final String CONTEXT_PROJECT_DIR = "projectDir"; //$NON-NLS-1$
+    public static final String CONTEXT_MODEL_DAO = "modelDao"; //$NON-NLS-1$
+    public static final String CONTEXT_MODEL_SERVICE = "modelService"; //$NON-NLS-1$
+    public static final String CONTEXT_MODEL_WEB = "modelWeb"; //$NON-NLS-1$
 
     public static final String CLIENT_USE_LEGACY_BUILDER = "useLegacyBuilder"; //$NON-NLS-1$
     

@@ -1,6 +1,6 @@
-package com.sf.gis.cds.model;
+package ${basePackage}.model;
 
-import com.sf.gis.cds.common.model.BaseModel;
+import ${basePackage}.common.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -20,13 +20,13 @@ public class ${modelName} extends BaseModel {
      */
     private static final long serialVersionUID = 1L;
     
-    <#foreach item="${columns}" var="col">
+    <#list columns  as col>
     
     /**
-     * 方案编号
+     * ${col.remarks}
      */
-    @ApiModelProperty(value = "${col.remarks}", position = ${col_index})
-    private String ${modelName}Code;
-    <#/foreach>
+    @ApiModelProperty(value = "${col.remarks}", position = ${col_index+1})
+    private ${col.fullyQualifiedJavaType.shortName} ${col.javaProperty};
+    </#list>
 
 }

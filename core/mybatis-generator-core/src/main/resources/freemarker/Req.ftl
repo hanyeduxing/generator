@@ -1,6 +1,6 @@
-package com.sf.gis.cds.req;
+package ${basePackage}.req;
 
-import com.sf.gis.cds.common.req.BaseReq;
+import ${basePackage}.common.req.BaseReq;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

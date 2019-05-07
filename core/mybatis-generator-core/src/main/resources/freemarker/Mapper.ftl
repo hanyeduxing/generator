@@ -1,8 +1,9 @@
-package com.sf.gis.cds.mapper;
+package ${basePackage}.mapper;
 
-import com.sf.gis.cds.common.mapper.BaseMapper;
-import com.sf.gis.cds.model.${modelName};
-import com.sf.gis.cds.req.${modelName}Req;
+import ${basePackage}.common.mapper.BaseMapper;
+import ${basePackage}.model.${modelName};
+import ${basePackage}.req.${modelName}Req;
 
 public interface ${modelName}Mapper extends BaseMapper<${modelName}, ${modelName}Req> {
+
 }

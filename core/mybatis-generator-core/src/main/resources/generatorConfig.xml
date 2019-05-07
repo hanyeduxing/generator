@@ -6,6 +6,11 @@
     <context id="marketing" targetRuntime="MyBatis3"
              defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8" />
+        <property name="basePackage" value="com.sf.gis.cds" />
+        <property name="projectDir" value="E:\GITRoot\gis-lss-core-xjcds-80003818\app-cds-parent" />
+        <property name="modelDao" value="app-cds-dao" />
+        <property name="modelService" value="app-cds-service" />
+        <property name="modelWeb" value="app-cds-web" />
 
         <!-- 配置生成toString()方法 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
@@ -62,6 +67,7 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
+            
         </table>
 
 

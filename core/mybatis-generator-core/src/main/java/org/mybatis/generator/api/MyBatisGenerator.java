@@ -260,9 +260,9 @@ public class MyBatisGenerator {
             context.introspectTables(callback, warnings,
                     fullyQualifiedTableNames);
             	try {
-					FreemarkerUtil.generatorByTables(context.getIntrospectedTables(), new File("D:\\test"));
+            		boolean overwrite = callback instanceof DefaultShellCallback ? ((DefaultShellCallback)callback).isOverwriteEnabled() : false;
+					FreemarkerUtil.generatorByContext(context, null, overwrite);
 				} catch (TemplateException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
         }

@@ -9,8 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.mybatis.generator.api.FreemarkerTest;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 
 import freemarker.template.Configuration;
@@ -45,44 +49,54 @@ public class FreemarkerUtil {
 	
 	/**
 	 * 根据表生成 文件
-	 * @param configuration 配置
 	 * @param templates	模板集合
-	 * @param projectDir 输出文件目录（maven项目目录）
-	 * @param table
+	 * @param files
+	 * @param override
+	 * @param data
 	 * @throws IOException 
 	 * @throws TemplateException 
 	 */
-	public static void generatorByTable(Configuration configuration, List<Template> templates, File projectDir, 
-			IntrospectedTable table, boolean override) throws IOException, TemplateException {
-		TableConfiguration tableConfiguration = table.getTableConfiguration();
-		Map<String, Object> data = new HashMap<>();
-		data.put("tableName", tableConfiguration.getTableName());
-		data.put("modelName", tableConfiguration.getDomainObjectName());
-		data.put("pkCol", table.getPrimaryKeyColumns());
-		data.put("columns", table.getBaseColumns());
-		data.put("remarks", table.getRemarks());
-		
-		
-		for(Template template : templates) {
-			String typeName = template.getSourceName().split("\\.")[0];
-			String suffix = "java";
-			if("Model".equals(typeName)) {
-				typeName = "";
-			}else if("Mapping".equals(typeName)) {
-				suffix = "xml";
+	public static void generatorByTable(List<Template> templates, List<File> files, 
+			boolean override, Map<String, Object> data) throws IOException, TemplateException {
+		for(int i = 0; i < templates.size(); i ++) {
+			Template template = templates.get(i);
+			File file = files.get(i);
+			
+			boolean append = false;
+			if(!override) {
+				if(file.exists()) {
+					if(TemplateEnum.TYPE_SERVICE.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_SERVICE_IMPL.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_CONTROLLER.getSourceName().contains(template.getSourceName())) {
+						continue;
+					}else if(TemplateEnum.TYPE_MODEL.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_REQ.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_MAPPER.getSourceName().contains(template.getSourceName())) {
+						append = false;
+					}else {
+						append = true;
+					}
+				}
 			}
-			String fileName = String.format("%s%s%s%s.%s", projectDir.getPath(), File.separator, 
-					tableConfiguration.getDomainObjectName(), typeName, suffix);
-			if(!projectDir.exists()) {
-				projectDir.mkdirs();
-			}
-			try(Writer out = new FileWriter(fileName, !override)) {
+			
+			try(Writer out = new FileWriter(file, append)) {
 				generatorFile(template, out, data);
 			}
 		}
+		
+		
 	}
 	
-	public static void generatorByTables(List<IntrospectedTable> tables, File projectDir) throws IOException, TemplateException {
+	/**
+	 * 
+	 * @param context
+	 * @param projectDir
+	 * @param overwrite
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	public static void generatorByContext(Context context, File projectDir, boolean overwrite) throws IOException, TemplateException {
+		List<IntrospectedTable> tables = context.getIntrospectedTables();
 		//2、创建一个Configuration对象
         //注意这个Configuration来自  freemarker.template
         Configuration configuration = new Configuration(Configuration.getVersion());
@@ -91,20 +105,128 @@ public class FreemarkerUtil {
         configuration.setClassForTemplateLoading(FreemarkerTest.class, "/freemarker");
  
         //4、模板文件的编码格式，一般就是utf-8
-        configuration.setDefaultEncoding("utf-8");
+        configuration.setDefaultEncoding(context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING));
+        Map<String, Object> data = new HashMap<>();
+        data.put(PropertyRegistry.CONTEXT_BASE_PACKAGE, context.getProperty(PropertyRegistry.CONTEXT_BASE_PACKAGE));
+        data.put(PropertyRegistry.CONTEXT_MODEL_DAO, context.getProperty(PropertyRegistry.CONTEXT_MODEL_DAO));
+        data.put(PropertyRegistry.CONTEXT_MODEL_SERVICE, context.getProperty(PropertyRegistry.CONTEXT_MODEL_SERVICE));
+        data.put(PropertyRegistry.CONTEXT_MODEL_WEB, context.getProperty(PropertyRegistry.CONTEXT_MODEL_WEB));
+        String projectDirStr = context.getProperty(PropertyRegistry.CONTEXT_PROJECT_DIR);
+        if(projectDirStr != null && projectDirStr.length() > 0) {
+        	projectDir = new File(projectDirStr);
+        }
         
         List<Template> templates = new ArrayList<>();
-        templates.add(configuration.getTemplate("/Model.ftl"));
-        templates.add(configuration.getTemplate("/Req.ftl"));
-        templates.add(configuration.getTemplate("/Mapper.ftl"));
-//        templates.add(configuration.getTemplate("/Mapping.ftl"));
-        templates.add(configuration.getTemplate("/Service.ftl"));
-        templates.add(configuration.getTemplate("/ServiceImpl.ftl"));
-        templates.add(configuration.getTemplate("/Controller.ftl"));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MODEL.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_REQ.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MAPPER.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MAPPING.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_SERVICE.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_SERVICE_IMPL.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_CONTROLLER.getSourceName()));
         
 		for(IntrospectedTable table : tables) {
-			generatorByTable(configuration, templates, projectDir, table, true);
+			TableConfiguration tableConfiguration = table.getTableConfiguration();
+			List<IntrospectedColumn> reqColumns = new ArrayList<>();
+			List<File> files = getFilesByTable(context, table, projectDir, reqColumns);
+			data.put("tableName", tableConfiguration.getTableName());
+			String modelName = tableConfiguration.getDomainObjectName();
+			data.put("modelName", modelName);
+			String lowerModelName = modelName.substring(0, 1).toLowerCase() + modelName.substring(1);
+			data.put("lowerModelName", lowerModelName);
+			data.put("pkCol", table.getPrimaryKeyColumns());
+			data.put("columns", table.getBaseColumns());
+			data.put("remarks", table.getRemarks());
+			data.put("reqColumns", reqColumns);
+			
+			generatorByTable(templates, files, overwrite, data);
 		}
+	}
+
+	
+	/**
+	 * 
+	 * @param context
+	 * @param table
+	 * @param projectDir
+	 * @param reqColumns
+	 * @return
+	 */
+	private static List<File> getFilesByTable(Context context,IntrospectedTable table, File projectDir,
+			List<IntrospectedColumn> reqColumns) {
+		List<File> files = new ArrayList<>();
+		String dirs = context.getProperty(PropertyRegistry.CONTEXT_BASE_PACKAGE);
+		dirs = File.separator + dirs.replaceAll("\\.", File.separator.equals("\\") ? "\\\\" : File.separator);
+		String modelDao = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_DAO);
+		String modelService = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_SERVICE);
+		String modelWeb = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_WEB);
+		
+		String objName = table.getTableConfiguration().getDomainObjectName();
+		for(TemplateEnum template : TemplateEnum.values()) {
+			String dirName = null;
+			String fileName = "";
+			switch (template) {
+				case TYPE_MODEL:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+	
+				case TYPE_REQ:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+					
+				case TYPE_MAPPER:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+					
+				case TYPE_MAPPING:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), "", template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+					
+				case TYPE_SERVICE:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelService, template.getFileDir(), dirs, template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+					
+				case TYPE_SERVICE_IMPL:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelService, template.getFileDir(), dirs, template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+					
+				case TYPE_CONTROLLER:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelWeb, template.getFileDir(), dirs, template.getPackageSuffix());
+					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+					break;
+					
+				default:
+					break;
+				}
+			
+			File dir = new File(dirName);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			fileName = dirName + File.separator + fileName;
+			File file = new File(fileName);
+			files.add(file);
+			if(file.exists() && TemplateEnum.TYPE_REQ.equals(template)) {
+				for(IntrospectedColumn col : table.getBaseColumns()) {
+					try {
+						String fileContent = FileUtils.readFileToString(file, "utf-8");
+						if(fileContent.contains(String.format(" %s;", col.getJavaProperty()))) {
+							reqColumns.add(col);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return files;
 	}
 
 }

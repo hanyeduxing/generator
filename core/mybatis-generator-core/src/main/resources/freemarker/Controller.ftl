@@ -18,12 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/${lowerModelName}")
 public class ${modelName}Controller extends BaseController<${modelName}, ${modelName}Req> {
   
-	private ${modelName}Service ${lowerModelName}Service;
+    private ${modelName}Service ${lowerModelName}Service;
 
-	@Autowired
-	public ${modelName}Controller(${modelName}Service ${lowerModelName}Service) {
-		this.${lowerModelName}Service = ${lowerModelName}Service;
-		setBaseService(${lowerModelName}Service);
-	}
+    @Autowired
+    public ${modelName}Controller(${modelName}Service ${lowerModelName}Service) {
+        this.${lowerModelName}Service = ${lowerModelName}Service;
+        setBaseService(${lowerModelName}Service);
+    }
     
 }

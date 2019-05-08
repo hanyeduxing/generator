@@ -260,7 +260,7 @@ public class MyBatisGenerator {
             context.introspectTables(callback, warnings,
                     fullyQualifiedTableNames);
             	try {
-            		boolean overwrite = callback instanceof DefaultShellCallback ? ((DefaultShellCallback)callback).isOverwriteEnabled() : false;
+            		boolean overwrite = shellCallback instanceof DefaultShellCallback ? ((DefaultShellCallback)shellCallback).isOverwriteEnabled() : false;
 					FreemarkerUtil.generatorByContext(context, null, overwrite);
 				} catch (TemplateException e) {
 					e.printStackTrace();
@@ -268,16 +268,16 @@ public class MyBatisGenerator {
         }
 
         // now run the generates
-        totalSteps = 0;
-        for (Context context : contextsToRun) {
-            totalSteps += context.getGenerationSteps();
-        }
-        callback.generationStarted(totalSteps);
-
-        for (Context context : contextsToRun) {
-            context.generateFiles(callback, generatedJavaFiles,
-                    generatedXmlFiles, warnings);
-        }
+//        totalSteps = 0;
+//        for (Context context : contextsToRun) {
+//            totalSteps += context.getGenerationSteps();
+//        }
+//        callback.generationStarted(totalSteps);
+//
+//        for (Context context : contextsToRun) {
+//            context.generateFiles(callback, generatedJavaFiles,
+//                    generatedXmlFiles, warnings);
+//        }
 
         // now save the files
         if (writeFiles) {

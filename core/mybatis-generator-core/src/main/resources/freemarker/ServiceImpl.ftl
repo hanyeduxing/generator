@@ -11,16 +11,16 @@ import ${basePackage}.service.${modelName}Service;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @Slf4j
+@Service
 public class ${modelName}ServiceImpl extends BaseServiceImpl<${modelName}, ${modelName}Req> implements ${modelName}Service {
-	
-	private ${modelName}Mapper ${lowerModelName}Mapper;
+    
+    private ${modelName}Mapper ${lowerModelName}Mapper;
 
-	@Autowired
-	public ${modelName}ServiceImpl(${modelName}Mapper ${lowerModelName}Mapper) {
-		setBaseMapper(${lowerModelName}Mapper);
-		this.${lowerModelName}Mapper = ${lowerModelName}Mapper;
-	}
-	
+    @Autowired
+    public ${modelName}ServiceImpl(${modelName}Mapper ${lowerModelName}Mapper) {
+        setBaseMapper(${lowerModelName}Mapper);
+        this.${lowerModelName}Mapper = ${lowerModelName}Mapper;
+    }
+    
 }

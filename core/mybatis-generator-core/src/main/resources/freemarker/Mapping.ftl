@@ -8,22 +8,24 @@
     </#list>
   </resultMap>
   <sql id="Base_Column_List">
-    <#list pkCol as col>${col.actualColumnName}</#list><#list columns as col>, ${col.actualColumnName}</#list>
+    <#list pkCol as col>${col.actualColumnName}, </#list><#list columns as col><#if columns?size-1 == col_index>${col.actualColumnName} <#else><#if col_index%3 == 0>${col.actualColumnName}, 
+    <#else>${col.actualColumnName}, </#if></#if></#list>
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ${tableName}
-    where ID = ${r'#{id,jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=VARCHAR}'}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ${tableName}
-    where ID = ${r'#{id,jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=VARCHAR}'}
   </delete>
   <insert id="insert" parameterType="${basePackage}.model.${modelName}">
     insert into ${tableName} (<#list pkCol as col>${col.actualColumnName}, </#list><#list columns as col><#if col_index%3 == 0><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if>
     <#else><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if></#if></#list>)
-    values (<#list pkCol as col>${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}, '}</#list><#list columns as col><#if columns?size-1 == col_index>${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'} '}<#else>${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}, '}
+    values (<#list pkCol as col>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}, '}</#list>
+    <#list columns as col><#if columns?size-1 == col_index>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'} '}<#else>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}, '}
     </#if></#list>)
   </insert>
   <insert id="insertSelective" parameterType="${basePackage}.model.${modelName}">
@@ -43,12 +45,12 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
     <#list pkCol as col>
       <if test="${col.javaProperty} != null">
-        ${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}'},
+        ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'},
       </if>
     </#list>
     <#list columns as col>
       <if test="${col.javaProperty} != null">
-        ${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}'},
+        ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'},
       </if>
     </#list>
     </trim>
@@ -58,18 +60,18 @@
     <set>
     <#list columns as col>
       <if test="${col.javaProperty} != null">
-        ${col.actualColumnName} = ${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}'},
+        ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'},
       </if>
     </#list>
-    </trim>
     </set>
-    where ID = ${r'#{id,jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=VARCHAR}'}
   </update>
   <update id="updateByPrimaryKey" parameterType="${basePackage}.model.${modelName}">
     update ${tableName}
-    set <#list columns as col>
-        ${col.actualColumnName} = ${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}'}, </#list>
-    where ID = ${r'#{id,jdbcType=VARCHAR}'}
+    set <#list columns as col><#if columns?size -1 == col_index>
+        ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'} <#else>
+        ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'}, </#if></#list>
+    where ID = ${r'#{id, jdbcType=VARCHAR}'}
   </update>
   <select id="queryByIds" parameterType="java.util.List" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from ${tableName} where ID in 
@@ -82,7 +84,7 @@
     <where>
     <#list reqColumns as col>
       <if test="@${basePackage}.common.util.Ognl@isNotEmpty(${col.javaProperty})">
-        and ${col.actualColumnName} = ${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}'}
+        and ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'}
       </if>
     </#list>
     <#if reqColumns?size lte 0>
@@ -95,8 +97,8 @@
     <foreach collection="list" item="item" separator=",">
       into ${tableName} (<#list pkCol as col>${col.actualColumnName}, </#list><#list columns as col><#if col_index%3 == 0><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if>
         <#else><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if></#if></#list>)
-      values(<#list pkCol as col>${r'#{item.'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}, '}</#list>
-        <#list columns as col><#if columns?size-1 == col_index>${r'#{item.'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'} '}<#else>${r'#{'}${col.javaProperty},jdbcType=${col.jdbcTypeName}${r'}, '}
+      values(<#list pkCol as col>${r'#{item.'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}, '}</#list>
+        <#list columns as col><#if columns?size-1 == col_index>${r'#{item.'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'} '}<#else>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}, '}
         </#if></#list>)
     </foreach>
     select 1 from dual 

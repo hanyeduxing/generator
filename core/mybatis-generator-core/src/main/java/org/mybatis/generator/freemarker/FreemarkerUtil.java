@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.mybatis.generator.api.FreemarkerTest;
@@ -138,6 +140,22 @@ public class FreemarkerUtil {
 			data.put("columns", table.getBaseColumns());
 			data.put("remarks", table.getRemarks());
 			data.put("reqColumns", reqColumns);
+			Set<String> importList = new HashSet<>();
+			data.put("importList", importList);
+			Set<String> reqImportList = new HashSet<>();
+			data.put("reqImportList", reqImportList);
+			for(IntrospectedColumn column : table.getBaseColumns()) {
+				String packageName = column.getFullyQualifiedJavaType().getPackageName();
+				if(!"java.lang".equals(packageName)) {
+					importList.add(column.getFullyQualifiedJavaType().getFullyQualifiedName());
+				}
+			}
+			for(IntrospectedColumn column : reqColumns) {
+				String packageName = column.getFullyQualifiedJavaType().getPackageName();
+				if(!"java.lang".equals(packageName)) {
+					reqImportList.add(column.getFullyQualifiedJavaType().getFullyQualifiedName());
+				}
+			}
 			
 			generatorByTable(templates, files, overwrite, data);
 		}

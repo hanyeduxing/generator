@@ -3,7 +3,9 @@ package ${basePackage}.model;
 import ${basePackage}.common.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Date;
+<#list importList  as var>
+import ${var};
+</#list>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

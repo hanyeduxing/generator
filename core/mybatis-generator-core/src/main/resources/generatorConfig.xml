@@ -7,7 +7,7 @@
              defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8" />
         <property name="basePackage" value="com.sf.gis.cds" />
-        <property name="projectDir" value="E:\GITRoot\gis-lss-core-xjcds-80003818\app-cds-parent" />
+        <property name="projectDir" value="D:\GITRoot\gis-lss-core-xjcds-80003818\app-cds-parent" />
         <property name="modelDao" value="app-cds-dao" />
         <property name="modelService" value="app-cds-service" />
         <property name="modelWeb" value="app-cds-web" />

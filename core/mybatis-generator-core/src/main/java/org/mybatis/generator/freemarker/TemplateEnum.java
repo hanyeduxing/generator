@@ -4,11 +4,19 @@ public enum TemplateEnum {
 	
 	TYPE_MODEL("/Model.ftl", ".java", "", "/src/main/java/", "/model"),
 	TYPE_REQ("/Req.ftl", ".java", "Req", "/src/main/java/", "/req"),
-	TYPE_MAPPER("/Mapper.ftl", ".java", "Mapper", "/src/main/java/", "/mapper"),
-	TYPE_MAPPING("/Mapping.ftl", ".xml", "Mapper", "/src/main/resources/", "/mapper"),
+	TYPE_MANAGER("/Manager.ftl", ".java", "Manager", "/src/main/java/", "/manager"),
+	TYPE_MANAGER_IMPL("/ManagerImpl.ftl", ".java", "ManagerImpl", "/src/main/java/", "/manager/impl"),
 	TYPE_SERVICE("/Service.ftl", ".java", "Service", "/src/main/java/", "/service"),
 	TYPE_SERVICE_IMPL("/ServiceImpl.ftl", ".java", "ServiceImpl", "/src/main/java/", "/service/impl"),
-	TYPE_CONTROLLER("/Controller.ftl", ".java", "Controller", "/src/main/java/", "/web/controller");
+	TYPE_CONTROLLER("/Controller.ftl", ".java", "Controller", "/src/main/java/", "/web/controller"),
+	
+	TYPE_POOL_MODEL("/PoolModel.ftl", ".java", "", "/src/main/java/", "/dao/%s/model"),
+	TYPE_POOL_REQ("/PoolReq.ftl", ".java", "Req", "/src/main/java/", "/dao/%s/req"),
+	TYPE_POOL_MAPPER("/PoolMapper.ftl", ".java", "Mapper", "/src/main/java/", "/dao/%s/mapper"),
+	TYPE_POOL_MAPPING("/PoolMapping.ftl", ".xml", "Mapper", "/src/main/resources/", "/mapper/%s"),
+	TYPE_POOL_SERVICE("/PoolService.ftl", ".java", "Service", "/src/main/java/", "/service/%s"),
+	TYPE_POOL_SERVICE_IMPL("/PoolServiceImpl.ftl", ".java", "ServiceImpl", "/src/main/java/", "/service/%s/impl"),
+	TYPE_POOL_CONTROLLER("/PoolController.ftl", ".java", "Controller", "/src/main/java/", "/web/controller/%s");
 
 	private TemplateEnum(String sourceName, String suffix, String classType, String fileDir, String packageSuffix) {
 		this.sourceName = sourceName;

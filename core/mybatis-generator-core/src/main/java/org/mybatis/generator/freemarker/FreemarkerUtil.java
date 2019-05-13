@@ -69,11 +69,17 @@ public class FreemarkerUtil {
 				if(file.exists()) {
 					if(TemplateEnum.TYPE_SERVICE.getSourceName().contains(template.getSourceName()) ||
 							TemplateEnum.TYPE_SERVICE_IMPL.getSourceName().contains(template.getSourceName()) ||
-							TemplateEnum.TYPE_CONTROLLER.getSourceName().contains(template.getSourceName())) {
+							TemplateEnum.TYPE_CONTROLLER.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_POOL_SERVICE.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_POOL_SERVICE_IMPL.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_POOL_CONTROLLER.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_POOL_MAPPER.getSourceName().contains(template.getSourceName())) {
 						continue;
 					}else if(TemplateEnum.TYPE_MODEL.getSourceName().contains(template.getSourceName()) ||
 							TemplateEnum.TYPE_REQ.getSourceName().contains(template.getSourceName()) ||
-							TemplateEnum.TYPE_MAPPER.getSourceName().contains(template.getSourceName())) {
+							TemplateEnum.TYPE_POOL_MODEL.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_POOL_REQ.getSourceName().contains(template.getSourceName()) ||
+							TemplateEnum.TYPE_POOL_MAPPER.getSourceName().contains(template.getSourceName())) {
 						append = false;
 					}else {
 						append = true;
@@ -108,6 +114,16 @@ public class FreemarkerUtil {
  
         //4、模板文件的编码格式，一般就是utf-8
         configuration.setDefaultEncoding(context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING));
+        
+        //生成资源池代码
+        generatorPool(context, projectDir, overwrite, configuration, tables);
+        //生成项目代码
+        generatorProject(context, projectDir, overwrite, configuration, tables);
+	}
+	
+	
+	public static void generatorProject(Context context, File projectDir, boolean overwrite, 
+			Configuration configuration, List<IntrospectedTable> tables) throws IOException, TemplateException {
         Map<String, Object> data = new HashMap<>();
         data.put(PropertyRegistry.CONTEXT_BASE_PACKAGE, context.getProperty(PropertyRegistry.CONTEXT_BASE_PACKAGE));
         data.put(PropertyRegistry.CONTEXT_MODEL_DAO, context.getProperty(PropertyRegistry.CONTEXT_MODEL_DAO));
@@ -121,8 +137,8 @@ public class FreemarkerUtil {
         List<Template> templates = new ArrayList<>();
         templates.add(configuration.getTemplate(TemplateEnum.TYPE_MODEL.getSourceName()));
         templates.add(configuration.getTemplate(TemplateEnum.TYPE_REQ.getSourceName()));
-        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MAPPER.getSourceName()));
-        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MAPPING.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MANAGER.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_MANAGER_IMPL.getSourceName()));
         templates.add(configuration.getTemplate(TemplateEnum.TYPE_SERVICE.getSourceName()));
         templates.add(configuration.getTemplate(TemplateEnum.TYPE_SERVICE_IMPL.getSourceName()));
         templates.add(configuration.getTemplate(TemplateEnum.TYPE_CONTROLLER.getSourceName()));
@@ -130,7 +146,62 @@ public class FreemarkerUtil {
 		for(IntrospectedTable table : tables) {
 			TableConfiguration tableConfiguration = table.getTableConfiguration();
 			List<IntrospectedColumn> reqColumns = new ArrayList<>();
-			List<File> files = getFilesByTable(context, table, projectDir, reqColumns);
+			List<File> files = getProjectFilesByTable(context, table, projectDir, reqColumns);
+			data.put("tableName", tableConfiguration.getTableName());
+			String modelName = tableConfiguration.getDomainObjectName();
+			data.put("modelName", modelName);
+			String lowerModelName = modelName.substring(0, 1).toLowerCase() + modelName.substring(1);
+			data.put("lowerModelName", lowerModelName);
+			data.put("pkCol", table.getPrimaryKeyColumns());
+			data.put("columns", table.getBaseColumns());
+			data.put("remarks", table.getRemarks());
+			data.put("reqColumns", reqColumns);
+			Set<String> importList = new HashSet<>();
+			data.put("importList", importList);
+			Set<String> reqImportList = new HashSet<>();
+			data.put("reqImportList", reqImportList);
+			for(IntrospectedColumn column : table.getBaseColumns()) {
+				String packageName = column.getFullyQualifiedJavaType().getPackageName();
+				if(!"java.lang".equals(packageName)) {
+					importList.add(column.getFullyQualifiedJavaType().getFullyQualifiedName());
+				}
+			}
+			for(IntrospectedColumn column : reqColumns) {
+				String packageName = column.getFullyQualifiedJavaType().getPackageName();
+				if(!"java.lang".equals(packageName)) {
+					reqImportList.add(column.getFullyQualifiedJavaType().getFullyQualifiedName());
+				}
+			}
+			
+			generatorByTable(templates, files, overwrite, data);
+		}
+	}
+	public static void generatorPool(Context context, File projectDir, boolean overwrite, 
+			Configuration configuration, List<IntrospectedTable> tables) throws IOException, TemplateException {
+		Map<String, Object> data = new HashMap<>();
+		data.put(PropertyRegistry.CONTEXT_POOL_PACKAGE, context.getProperty(PropertyRegistry.CONTEXT_POOL_PACKAGE));
+		data.put(PropertyRegistry.CONTEXT_BASE_PACKAGE, context.getProperty(PropertyRegistry.CONTEXT_BASE_POOL_PACKAGE));
+		data.put(PropertyRegistry.CONTEXT_MODEL_DAO, context.getProperty(PropertyRegistry.CONTEXT_MODEL_POOL_DAO));
+		data.put(PropertyRegistry.CONTEXT_MODEL_SERVICE, context.getProperty(PropertyRegistry.CONTEXT_MODEL_POOL_SERVICE));
+		data.put(PropertyRegistry.CONTEXT_MODEL_WEB, context.getProperty(PropertyRegistry.CONTEXT_MODEL_POOL_WEB));
+		String projectDirStr = context.getProperty(PropertyRegistry.CONTEXT_PROJECT_POOL_DIR);
+		if(projectDirStr != null && projectDirStr.length() > 0) {
+			projectDir = new File(projectDirStr);
+		}
+		
+		List<Template> templates = new ArrayList<>();
+		templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_MODEL.getSourceName()));
+		templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_REQ.getSourceName()));
+		templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_MAPPER.getSourceName()));
+        templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_MAPPING.getSourceName()));
+		templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_SERVICE.getSourceName()));
+		templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_SERVICE_IMPL.getSourceName()));
+		templates.add(configuration.getTemplate(TemplateEnum.TYPE_POOL_CONTROLLER.getSourceName()));
+		
+		for(IntrospectedTable table : tables) {
+			TableConfiguration tableConfiguration = table.getTableConfiguration();
+			List<IntrospectedColumn> reqColumns = new ArrayList<>();
+			List<File> files = getPoolFilesByTable(context, table, projectDir, reqColumns);
 			data.put("tableName", tableConfiguration.getTableName());
 			String modelName = tableConfiguration.getDomainObjectName();
 			data.put("modelName", modelName);
@@ -170,7 +241,7 @@ public class FreemarkerUtil {
 	 * @param reqColumns
 	 * @return
 	 */
-	private static List<File> getFilesByTable(Context context,IntrospectedTable table, File projectDir,
+	private static List<File> getProjectFilesByTable(Context context,IntrospectedTable table, File projectDir,
 			List<IntrospectedColumn> reqColumns) {
 		List<File> files = new ArrayList<>();
 		String dirs = context.getProperty(PropertyRegistry.CONTEXT_BASE_PACKAGE);
@@ -194,13 +265,13 @@ public class FreemarkerUtil {
 					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
 					break;
 					
-				case TYPE_MAPPER:
+				case TYPE_MANAGER:
 					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, template.getPackageSuffix());
 					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
 					break;
 					
-				case TYPE_MAPPING:
-					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), "", template.getPackageSuffix());
+				case TYPE_MANAGER_IMPL:
+					dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, template.getPackageSuffix());
 					fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
 					break;
 					
@@ -222,7 +293,9 @@ public class FreemarkerUtil {
 				default:
 					break;
 				}
-			
+			if(dirName == null) {
+				continue;
+			}
 			File dir = new File(dirName);
 			if(!dir.exists()) {
 				dir.mkdirs();
@@ -232,6 +305,93 @@ public class FreemarkerUtil {
 			File file = new File(fileName);
 			files.add(file);
 			if(file.exists() && TemplateEnum.TYPE_REQ.equals(template)) {
+				for(IntrospectedColumn col : table.getBaseColumns()) {
+					try {
+						String fileContent = FileUtils.readFileToString(file, "utf-8");
+						if(fileContent.contains(String.format(" %s;", col.getJavaProperty()))) {
+							reqColumns.add(col);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return files;
+	}
+	/**
+	 * 
+	 * @param context
+	 * @param table
+	 * @param projectDir
+	 * @param reqColumns
+	 * @return
+	 */
+	private static List<File> getPoolFilesByTable(Context context,IntrospectedTable table, File projectDir,
+			List<IntrospectedColumn> reqColumns) {
+		List<File> files = new ArrayList<>();
+		String dirs = context.getProperty(PropertyRegistry.CONTEXT_BASE_POOL_PACKAGE);
+		dirs = File.separator + dirs.replaceAll("\\.", File.separator.equals("\\") ? "\\\\" : File.separator);
+		String packages = File.separator + context.getProperty(PropertyRegistry.CONTEXT_POOL_PACKAGE);
+		String modelDao = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_POOL_DAO);
+		String modelService = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_POOL_SERVICE);
+		String modelWeb = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_POOL_WEB);
+		
+		String objName = table.getTableConfiguration().getDomainObjectName();
+		for(TemplateEnum template : TemplateEnum.values()) {
+			String dirName = null;
+			String fileName = "";
+			switch (template) {
+			case TYPE_POOL_MODEL:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			case TYPE_POOL_REQ:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			case TYPE_POOL_MAPPER:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), dirs, String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			case TYPE_POOL_MAPPING:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelDao, template.getFileDir(), "", String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			case TYPE_POOL_SERVICE:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelService, template.getFileDir(), dirs, String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			case TYPE_POOL_SERVICE_IMPL:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelService, template.getFileDir(), dirs, String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			case TYPE_POOL_CONTROLLER:
+				dirName = String.format("%s%s%s%s%s", projectDir.getPath(), modelWeb, template.getFileDir(), dirs, String.format(template.getPackageSuffix(), packages));
+				fileName = String.format("%s%s%s", objName, template.getClassType(), template.getSuffix());
+				break;
+				
+			default:
+				break;
+			}
+			if(dirName == null) {
+				continue;
+			}
+			File dir = new File(dirName);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			fileName = dirName + File.separator + fileName;
+			File file = new File(fileName);
+			files.add(file);
+			if(file.exists() && TemplateEnum.TYPE_POOL_REQ.equals(template)) {
 				for(IntrospectedColumn col : table.getBaseColumns()) {
 					try {
 						String fileContent = FileUtils.readFileToString(file, "utf-8");

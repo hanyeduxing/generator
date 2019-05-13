@@ -7,10 +7,17 @@
              defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8" />
         <property name="basePackage" value="com.sf.gis.cds" />
-        <property name="projectDir" value="D:\GITRoot\gis-lss-core-xjcds-80003818\app-cds-parent" />
+        <property name="projectDir" value="E:\GITRoot\gis-lss-core-xjcds-80003818\app-cds-parent" />
         <property name="modelDao" value="app-cds-dao" />
         <property name="modelService" value="app-cds-service" />
         <property name="modelWeb" value="app-cds-web" />
+        
+        <property name="basePoolPackage" value="com.sf.gis.pool" />
+        <property name="projectPoolDir" value="E:\GITRoot\gis-lss-core-xjpools-80003818\app-pool-parent" />
+        <property name="modelPoolDao" value="app-pool-dao" />
+        <property name="modelPoolService" value="app-pool-service" />
+        <property name="modelPoolWeb" value="app-pool-web" />
+        <property name="package" value="cds" />
 
         <!-- 配置生成toString()方法 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
@@ -62,14 +69,19 @@
         </javaClientGenerator>
 
         <!-- 配置需要反向生成表的信息 -->
-        <table tableName="CDS_SCHEME_MATERIAL" domainObjectName="SchemeMaterial"
+        <!-- <table tableName="MDS_TRAIN_RECEIVE" domainObjectName="TrainReceive"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
-            
-        </table>
+        </table> -->
 
+        <table tableName="CDS_SCHEME_VEHICLE" domainObjectName="SchemeVehicle"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
 
     </context>
 </generatorConfiguration>

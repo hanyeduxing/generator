@@ -15,11 +15,11 @@
     select 
     <include refid="Base_Column_List" />
     from ${tableName}
-    where ID = ${r'#{id, jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=CHAR}'}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ${tableName}
-    where ID = ${r'#{id, jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=CHAR}'}
   </delete>
   <insert id="insert" parameterType="${basePackage}.dao.${package}.model.${modelName}">
     insert into ${tableName} (<#list pkCol as col>${col.actualColumnName}, </#list><#list columns as col><#if col_index%3 == 0><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if>
@@ -64,14 +64,14 @@
       </if>
     </#list>
     </set>
-    where ID = ${r'#{id, jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=CHAR}'}
   </update>
   <update id="updateByPrimaryKey" parameterType="${basePackage}.dao.${package}.model.${modelName}">
     update ${tableName}
     set <#list columns as col><#if columns?size -1 == col_index>
         ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'} <#else>
         ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'}, </#if></#list>
-    where ID = ${r'#{id, jdbcType=VARCHAR}'}
+    where ID = ${r'#{id, jdbcType=CHAR}'}
   </update>
   <select id="queryByIds" parameterType="java.util.List" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from ${tableName} where ID in 
@@ -84,7 +84,11 @@
     <where>
     <#list reqColumns as col>
       <if test="@${basePackage}.common.util.Ognl@isNotEmpty(${col.javaProperty})">
+      <#if (col.actualColumnName?ends_with('MC'))>
+        and ${col.actualColumnName} like '%' || ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'} || '%'
+      <#else>
         and ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'}
+      </#if>
       </if>
     </#list>
     <#if reqColumns?size lte 0>

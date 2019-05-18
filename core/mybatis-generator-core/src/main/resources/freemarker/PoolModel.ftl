@@ -25,9 +25,9 @@ public class ${modelName} extends BaseModel {
     <#list columns  as col>
     
     /**
-     * ${col.remarks}
+     * ${col.remarks!}
      */
-    @ApiModelProperty(value = "${col.remarks}", position = ${col_index+1})
+    @ApiModelProperty(value = "${col.remarks!}", position = ${col_index+1})
     private ${col.fullyQualifiedJavaType.shortName} ${col.javaProperty};
     </#list>
 

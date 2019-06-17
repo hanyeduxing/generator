@@ -111,8 +111,31 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>-->
         <table tableName="TB_GCXMXX" domainObjectName="Project"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_QKXX" domainObjectName="Block"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>   
+        <table tableName="TB_GGFB" domainObjectName="Announcement"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>-->
+        <table tableName="TB_XXMB_DYGW" domainObjectName="NoticeRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_XXMB" domainObjectName="Notice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

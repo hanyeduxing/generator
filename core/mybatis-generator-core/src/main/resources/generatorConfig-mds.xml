@@ -69,7 +69,7 @@
         </javaClientGenerator>
 
         <!-- 配置需要反向生成表的信息 -->
-
+        <!-- 
         <table tableName="TB_WLS" domainObjectName="CdsCarrier"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -95,24 +95,13 @@
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
         
-        <table tableName="TB_ZXRY_GZJL" domainObjectName="HandlerWorkRecord"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
         <table tableName="TB_ZXSB" domainObjectName="HandlingDevice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
-        <table tableName="TB_ZXSB_GZJL" domainObjectName="HandlingDeviceRecord"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
+        
         <table tableName="TB_ZXSBLX" domainObjectName="HandlingDeviceType"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -164,6 +153,19 @@
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
         <table tableName="TB_YSSBLX" domainObjectName="TransportDeviceType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        -->
+        <table tableName="TB_ZXRY_GZJL" domainObjectName="HandlerWorkRecord"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZXSB_GZJL" domainObjectName="HandlingDeviceRecord"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

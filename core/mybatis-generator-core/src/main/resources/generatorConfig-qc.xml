@@ -34,7 +34,7 @@
         </commentGenerator>
 
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection connectionURL="jdbc:oracle:thin:@193.112.85.146:1521/orcl" driverClass="oracle.jdbc.driver.OracleDriver" password="Abc1234" userId="kcy_sys" >
+        <jdbcConnection connectionURL="jdbc:oracle:thin:@10.82.232.107:1521/pdb1" driverClass="oracle.jdbc.driver.OracleDriver" password="Abc1234" userId="kcy_sys" >
             <!-- 针对oracle数据库 -->
             <property name="remarksReporting" value="true"/>
             <!-- 针对mysql数据库 
@@ -69,7 +69,7 @@
         </javaClientGenerator>
 
         <!-- 配置需要反向生成表的信息 -->
-
+<!-- 
         <table tableName="TB_BGWJ" domainObjectName="ReportFile"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -145,6 +145,13 @@
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
         <table tableName="TB_KCXX" domainObjectName="Storage"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+         -->
+         <table tableName="TB_ZJXQ_MX" domainObjectName="QualityRequire"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

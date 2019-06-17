@@ -34,7 +34,7 @@
         </commentGenerator>
 
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection connectionURL="jdbc:oracle:thin:@193.112.85.146:1521/orcl" driverClass="oracle.jdbc.driver.OracleDriver" password="Abc1234" userId="kcy_sys" >
+        <jdbcConnection connectionURL="jdbc:oracle:thin:@10.82.232.107:1521/pdb1" driverClass="oracle.jdbc.driver.OracleDriver" password="Abc1234" userId="kcy_sys" >
             <!-- 针对oracle数据库 -->
             <property name="remarksReporting" value="true"/>
             <!-- 针对mysql数据库 
@@ -69,15 +69,8 @@
         </javaClientGenerator>
 
         <!-- 配置需要反向生成表的信息 -->
-
         <!-- 
         <table tableName="TB_CGDDFA" domainObjectName="SchemePurchase"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
-        <table tableName="TB_CGDDFA_XQ" domainObjectName="SchemePurchaseDetail"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -89,19 +82,7 @@
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
-        <table tableName="TB_RKDDFA_XQ" domainObjectName="SchemeInStockDetail"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
         <table tableName="TB_ZJDDFA" domainObjectName="SchemeQc"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
-        <table tableName="TB_ZJDDFA_XQ" domainObjectName="SchemeQcDetail"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -131,18 +112,7 @@
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
-        <table tableName="TB_PSDDFA" domainObjectName="SchemeDelivery"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
-        <table tableName="TB_PSDDFA_XQ" domainObjectName="SchemeDeliveryDetail"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>
+        
         <table tableName="TB_YSRW" domainObjectName="TransportTask"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -160,13 +130,169 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
-        </table>-->
+        </table>
         <table tableName="TB_YLXQ_Z_CGSQ" domainObjectName="PurchasingRequest"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
+        <table tableName="TB_YLYBXQ_Z_CKSQ" domainObjectName="DeliveryRequest"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_FHYBXQ_Z_RKSQ" domainObjectName="InStockRequest"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>   
+        <table tableName="TB_ZJXQ_MX" domainObjectName="QualityRequire"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZJDDFA_XQ" domainObjectName="SchemeQcDetail"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_RKDDFA_XQ" domainObjectName="SchemeInStockDetail"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_CGDDFA_XQ" domainObjectName="SchemePurchaseDetail"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZXSB_GZJL" domainObjectName="HandlingDeviceRecord"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZXRY_GZJL" domainObjectName="HandlerWorkRecord"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_PSDDFA_XQ" domainObjectName="SchemeDeliveryDetail"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_RYLX" domainObjectName="HandlerWorkerType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZXSBLX" domainObjectName="HandlingDeviceType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_BCLX" domainObjectName="ShuttleBusRoute"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_YSSBLX" domainObjectName="TransportDeviceType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_BCCLGL" domainObjectName="ShuttleBusManage"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_WLS" domainObjectName="CdsCarrier"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZXSB" domainObjectName="HandlingDevice"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_ZXRY" domainObjectName="HandlerWorker"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_YSSB" domainObjectName="TransportDevice"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        <table tableName="TB_ZJDW" domainObjectName="Quality"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_KCD" domainObjectName="StorageAddress"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_FHYBXQ_Z_RKSQ" domainObjectName="InStockRequest"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
         
+        <table tableName="TB_CZJL" domainObjectName="OperationLog"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_BJWZML" domainObjectName="BjContents"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table tableName="TB_PSDDFA" domainObjectName="SchemeDelivery"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        -->
+        <table tableName="TB_FHYBXQ_Z_RKSQ" domainObjectName="InStockRequest"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>   
+        <table tableName="TB_ZJDDFA" domainObjectName="SchemeQc"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
     </context>
 </generatorConfiguration>

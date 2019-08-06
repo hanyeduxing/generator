@@ -6,11 +6,11 @@
     <context id="marketing" targetRuntime="MyBatis3"
              defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8" />
-        <property name="basePackage" value="com.sf.gis.cds" />
-        <property name="projectDir" value="D:\GITRoot\gis-lss-core-xjcds-80003818\app-cds-parent" />
-        <property name="modelDao" value="app-cds-dao" />
-        <property name="modelService" value="app-cds-service" />
-        <property name="modelWeb" value="app-cds-web" />
+        <property name="basePackage" value="com.demo" />
+        <property name="projectDir" value="F:\GITRoot\demo" />
+        <property name="modelDao" value="dao" />
+        <property name="modelService" value="service" />
+        <property name="modelWeb" value="web" />
 
         <!-- 配置生成toString()方法 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
@@ -42,7 +42,7 @@
         <!-- 配置生成实体类的包名和位置 -->
         <!-- 通过maven管理插件时targetProject的路径为绝对路径：D:\workspace_oxygen\mybatis3 -->
         <!-- 通过自安装插件生成时的地址：mybatis3 -->
-        <javaModelGenerator targetPackage="com.sf.gis.idp.demand.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.demo.model" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -57,7 +57,7 @@
         <!-- 配置生成mapper文件的包名和位置 -->
         <!-- 通过maven管理插件时targetProject的路径为绝对路径：D:\workspace_oxygen\mybatis3 -->
         <!-- 通过自安装插件生成时的地址：mybatis3 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sf.gis.idp.mapper.demand" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.demo.demand" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

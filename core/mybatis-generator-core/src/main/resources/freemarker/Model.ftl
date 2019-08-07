@@ -1,4 +1,4 @@
-package ${basePackage}.model;
+package ${basePackage}.dao.model;
 
 import ${basePackage}.common.model.BaseModel;
 import io.swagger.annotations.ApiModel;

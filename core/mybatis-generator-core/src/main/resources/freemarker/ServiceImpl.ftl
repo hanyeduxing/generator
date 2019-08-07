@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ${basePackage}.common.service.impl.BaseServiceImpl;
-import ${basePackage}.mapper.${modelName}Mapper;
-import ${basePackage}.model.${modelName};
-import ${basePackage}.req.${modelName}Req;
+import ${basePackage}.dao.mapper.${modelName}Mapper;
+import ${basePackage}.dao.model.${modelName};
+import ${basePackage}.dao.req.${modelName}Req;
 import ${basePackage}.service.${modelName}Service;
 
 import lombok.extern.slf4j.Slf4j;

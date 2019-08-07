@@ -1,8 +1,8 @@
 package ${basePackage}.service;
 
 import ${basePackage}.common.service.BaseService;
-import ${basePackage}.model.${modelName};
-import ${basePackage}.req.${modelName}Req;
+import ${basePackage}.dao.model.${modelName};
+import ${basePackage}.dao.req.${modelName}Req;
 
 public interface ${modelName}Service extends BaseService<${modelName}, ${modelName}Req> {
 

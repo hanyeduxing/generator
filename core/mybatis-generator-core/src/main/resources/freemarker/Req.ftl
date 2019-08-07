@@ -1,4 +1,4 @@
-package ${basePackage}.req;
+package ${basePackage}.dao.req;
 
 import ${basePackage}.common.req.BaseReq;
 

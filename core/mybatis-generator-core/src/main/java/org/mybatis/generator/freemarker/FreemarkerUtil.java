@@ -173,7 +173,7 @@ public class FreemarkerUtil {
 	private static List<File> getFilesByTable(Context context,IntrospectedTable table, File projectDir,
 			List<IntrospectedColumn> reqColumns) {
 		List<File> files = new ArrayList<>();
-		String dirs = context.getProperty(PropertyRegistry.CONTEXT_BASE_PACKAGE);
+ 		String dirs = context.getProperty(PropertyRegistry.CONTEXT_BASE_PACKAGE);
 		dirs = File.separator + dirs.replaceAll("\\.", File.separator.equals("\\") ? "\\\\" : File.separator);
 		String modelDao = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_DAO);
 		String modelService = File.separator + context.getProperty(PropertyRegistry.CONTEXT_MODEL_SERVICE);

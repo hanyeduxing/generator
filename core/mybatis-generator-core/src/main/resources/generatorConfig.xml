@@ -7,7 +7,7 @@
              defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8" />
         <property name="basePackage" value="com.demo" />
-        <property name="projectDir" value="F:\GITRoot\demo" />
+        <property name="projectDir" value="E:\GITRoot\demo" />
         <property name="modelDao" value="dao" />
         <property name="modelService" value="service" />
         <property name="modelWeb" value="web" />

@@ -2,9 +2,9 @@ package org.mybatis.generator.freemarker;
 
 public enum TemplateEnum {
 	
-	TYPE_MODEL("/Model.ftl", ".java", "", "/src/main/java/", "/model"),
-	TYPE_REQ("/Req.ftl", ".java", "Req", "/src/main/java/", "/req"),
-	TYPE_MAPPER("/Mapper.ftl", ".java", "Mapper", "/src/main/java/", "/mapper"),
+	TYPE_MODEL("/Model.ftl", ".java", "", "/src/main/java/", "/dao/model"),
+	TYPE_REQ("/Req.ftl", ".java", "Req", "/src/main/java/", "/dao/req"),
+	TYPE_MAPPER("/Mapper.ftl", ".java", "Mapper", "/src/main/java/", "/dao/mapper"),
 	TYPE_MAPPING("/Mapping.ftl", ".xml", "Mapper", "/src/main/resources/", "/mapper"),
 	TYPE_SERVICE("/Service.ftl", ".java", "Service", "/src/main/java/", "/service"),
 	TYPE_SERVICE_IMPL("/ServiceImpl.ftl", ".java", "ServiceImpl", "/src/main/java/", "/service/impl"),

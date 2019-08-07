@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ${basePackage}.common.controller.BaseController;
-import ${basePackage}.model.${modelName};
-import ${basePackage}.req.${modelName}Req;
+import ${basePackage}.dao.model.${modelName};
+import ${basePackage}.dao.req.${modelName}Req;
 import ${basePackage}.service.${modelName}Service;
 
 import io.swagger.annotations.Api;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${basePackage}.mapper.${modelName}Mapper">
-  <resultMap id="BaseResultMap" type="${basePackage}.model.${modelName}">
+<mapper namespace="${basePackage}.dao.mapper.${modelName}Mapper">
+  <resultMap id="BaseResultMap" type="${basePackage}.dao.model.${modelName}">
     <#list pkCol as col><id column="${col.actualColumnName}" jdbcType="${col.jdbcTypeName}" property="${col.javaProperty}" /></#list>
     <#list columns as col>
     <result column="${col.actualColumnName}" jdbcType="${col.jdbcTypeName}" property="${col.javaProperty}" />
@@ -21,14 +21,14 @@
     delete from ${tableName}
     where ID = ${r'#{id, jdbcType=VARCHAR}'}
   </delete>
-  <insert id="insert" parameterType="${basePackage}.model.${modelName}">
+  <insert id="insert" parameterType="${basePackage}.dao.model.${modelName}">
     insert into ${tableName} (<#list pkCol as col>${col.actualColumnName}, </#list><#list columns as col><#if col_index%3 == 0><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if>
     <#else><#if columns?size-1 == col_index>${col.actualColumnName} <#else>${col.actualColumnName}, </#if></#if></#list>)
     values (<#list pkCol as col>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}, '}</#list>
     <#list columns as col><#if columns?size-1 == col_index>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'} '}<#else>${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}, '}
     </#if></#list>)
   </insert>
-  <insert id="insertSelective" parameterType="${basePackage}.model.${modelName}">
+  <insert id="insertSelective" parameterType="${basePackage}.dao.model.${modelName}">
     insert into ${tableName}
     <trim prefix="(" suffix=")" suffixOverrides=",">
     <#list pkCol as col>
@@ -55,7 +55,7 @@
     </#list>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="${basePackage}.model.${modelName}">
+  <update id="updateByPrimaryKeySelective" parameterType="${basePackage}.dao.model.${modelName}">
     update ${tableName}
     <set>
     <#list columns as col>
@@ -66,7 +66,7 @@
     </set>
     where ID = ${r'#{id, jdbcType=VARCHAR}'}
   </update>
-  <update id="updateByPrimaryKey" parameterType="${basePackage}.model.${modelName}">
+  <update id="updateByPrimaryKey" parameterType="${basePackage}.dao.model.${modelName}">
     update ${tableName}
     set <#list columns as col><#if columns?size -1 == col_index>
         ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'} <#else>
@@ -79,7 +79,7 @@
       ${r'#{item, jdbcType=VARCHAR}'}
     </foreach>
   </select>
-  <select id="queryEntityList" parameterType="${basePackage}.req.${modelName}Req" resultMap="BaseResultMap">
+  <select id="queryEntityList" parameterType="${basePackage}.dao.req.${modelName}Req" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from ${tableName}
     <where>
     <#list reqColumns as col>

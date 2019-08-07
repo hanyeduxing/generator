@@ -11,6 +11,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+*
+* @author ${author}
+* @date ${date}
+*/
 @ApiModel(description = "${remarks}列表查询条件")
 @Data
 @ToString

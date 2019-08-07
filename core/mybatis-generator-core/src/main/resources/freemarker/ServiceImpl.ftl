@@ -11,6 +11,11 @@ import ${basePackage}.service.${modelName}Service;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+*
+* @author ${author}
+* @date ${date}
+*/
 @Slf4j
 @Service
 public class ${modelName}ServiceImpl extends BaseServiceImpl<${modelName}, ${modelName}Req> implements ${modelName}Service {

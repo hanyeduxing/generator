@@ -10,6 +10,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+*
+* @author ${author}
+* @date ${date}
+*/
 @ApiModel(description = "${remarks}")
 @Data
 @ToString

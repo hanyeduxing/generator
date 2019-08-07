@@ -12,6 +12,11 @@ import ${basePackage}.service.${modelName}Service;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+*
+* @author ${author}
+* @date ${date}
+*/
 @Api(tags = "${remarks}管理接口")
 @Slf4j
 @RestController

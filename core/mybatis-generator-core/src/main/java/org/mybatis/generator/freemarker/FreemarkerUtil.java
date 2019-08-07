@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+import freemarker.template.utility.DateUtil;
 import org.apache.commons.io.FileUtils;
 import org.mybatis.generator.api.FreemarkerTest;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -113,6 +110,8 @@ public class FreemarkerUtil {
         data.put(PropertyRegistry.CONTEXT_MODEL_DAO, context.getProperty(PropertyRegistry.CONTEXT_MODEL_DAO));
         data.put(PropertyRegistry.CONTEXT_MODEL_SERVICE, context.getProperty(PropertyRegistry.CONTEXT_MODEL_SERVICE));
         data.put(PropertyRegistry.CONTEXT_MODEL_WEB, context.getProperty(PropertyRegistry.CONTEXT_MODEL_WEB));
+		data.put("date", new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
+		data.put("author", "80003818");
         String projectDirStr = context.getProperty(PropertyRegistry.CONTEXT_PROJECT_DIR);
         if(projectDirStr != null && projectDirStr.length() > 0) {
         	projectDir = new File(projectDirStr);

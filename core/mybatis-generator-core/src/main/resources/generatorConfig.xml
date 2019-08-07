@@ -27,12 +27,12 @@
         </commentGenerator>
 
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection connectionURL="jdbc:oracle:thin:@193.112.85.146:1521/orcl" driverClass="oracle.jdbc.driver.OracleDriver" password="Abc1234" userId="kcy" >
-            <!-- 针对oracle数据库 -->
-            <property name="remarksReporting" value="true"/>
-            <!-- 针对mysql数据库 
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/kcy_test" driverClass="com.mysql.jdbc.Driver" password="root" userId="root" >
+            <!-- 针对oracle数据库
+            <property name="remarksReporting" value="true"/> -->
+            <!-- 针对mysql数据库 -->
             <property name="useInformationSchema" value="true"></property>
-            -->
+
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -62,7 +62,7 @@
         </javaClientGenerator>
 
         <!-- 配置需要反向生成表的信息 -->
-        <table tableName="CDS_SCHEME_MATERIAL" domainObjectName="SchemeMaterial"
+        <table tableName="tm_distribution" domainObjectName="Distribution"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

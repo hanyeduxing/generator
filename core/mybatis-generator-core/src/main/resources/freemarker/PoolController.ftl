@@ -12,7 +12,7 @@ import ${basePackage}.service.${package}.${modelName}Service;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
-@Api(tags = "质检_${remarks}管理接口")
+@Api(tags = "调度_${remarks}管理接口")
 @Slf4j
 @RestController
 @RequestMapping("/${lowerModelName}")

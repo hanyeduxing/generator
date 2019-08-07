@@ -8,14 +8,14 @@
     </#list>
   </resultMap>
   <sql id="Base_Column_List">
-    <#list pkCol as col>${col.actualColumnName}, </#list><#list columns as col><#if columns?size-1 == col_index>${col.actualColumnName} <#else><#if col_index%3 == 0>${col.actualColumnName}, 
-    <#else>${col.actualColumnName}, </#if></#if></#list>
+    <#list pkCol as col>o.${col.actualColumnName}, </#list><#list columns as col><#if columns?size-1 == col_index>o.${col.actualColumnName} <#else><#if col_index%3 == 0>o.${col.actualColumnName}, 
+    <#else>o.${col.actualColumnName}, </#if></#if></#list>
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ${tableName}
-    where ID = ${r'#{id, jdbcType=CHAR}'}
+    from ${tableName} o
+    where o.ID = ${r'#{id, jdbcType=CHAR}'}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ${tableName}
@@ -74,20 +74,20 @@
     where ID = ${r'#{id, jdbcType=CHAR}'}
   </update>
   <select id="queryByIds" parameterType="java.util.List" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from ${tableName} where ID in 
+    select <include refid="Base_Column_List" /> from ${tableName} o where o.ID in 
     <foreach open="(" close=")" collection="list" item="item" separator=",">
       ${r'#{item, jdbcType=VARCHAR}'}
     </foreach>
   </select>
   <select id="queryEntityList" parameterType="${basePackage}.dao.${package}.req.${modelName}Req" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from ${tableName}
+    select <include refid="Base_Column_List" /> from ${tableName} o
     <where>
     <#list reqColumns as col>
       <if test="@${basePackage}.common.util.Ognl@isNotEmpty(${col.javaProperty})">
       <#if (col.actualColumnName?ends_with('MC'))>
-        and ${col.actualColumnName} like '%' || ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'} || '%'
+        and o.${col.actualColumnName} like '%' || ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'} || '%'
       <#else>
-        and ${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'}
+        and o.${col.actualColumnName} = ${r'#{'}${col.javaProperty}, jdbcType=${col.jdbcTypeName}${r'}'}
       </#if>
       </if>
     </#list>

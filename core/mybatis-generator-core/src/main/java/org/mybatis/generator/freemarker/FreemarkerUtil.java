@@ -118,7 +118,7 @@ public class FreemarkerUtil {
         //生成资源池代码
         generatorPool(context, projectDir, overwrite, configuration, tables);
         //生成项目代码
-        generatorProject(context, projectDir, overwrite, configuration, tables);
+//        generatorProject(context, projectDir, overwrite, configuration, tables);
 	}
 	
 	

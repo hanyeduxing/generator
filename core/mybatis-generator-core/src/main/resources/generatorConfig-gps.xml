@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <context id="marketing" targetRuntime="MyBatis3"
+             defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8" />
+        <property name="basePackage" value="com.sf.gis.cds" />
+        <property name="projectDir" value="E:\GITRoot\gis-lss-core-xjcommon-80003818\xj-common-parent" />
+        <property name="modelDao" value="xj-common-gps" />
+        <property name="modelService" value="xj-common-gps" />
+        <property name="modelWeb" value="xj-common-gps" />
+        
+        <property name="basePoolPackage" value="com.sf.gis.pool" />
+        <property name="projectPoolDir" value="E:\GITRoot\gis-lss-core-xjpools-80003818\app-pool-parent" />
+        <property name="modelPoolDao" value="app-pool-dao" />
+        <property name="modelPoolService" value="app-pool-service" />
+        <property name="modelPoolWeb" value="app-pool-web" />
+        <property name="package" value="gps" />
+
+        <!-- 配置生成toString()方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+
+        <commentGenerator>
+            <!-- 是否禁止显示日期 true：是 ： false:否 -->
+            <property name="suppressDate" value="false" />
+            <!-- 是否去除自动生成的所有注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+            <!-- 是否添加字段注释 true:是 false：否 -->
+            <property name="addRemarkComments" value="true" />
+            <!-- 自定义属性 作者名称 -->
+            <property name="author" value="zach" />
+        </commentGenerator>
+
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection connectionURL="jdbc:oracle:thin:@10.82.232.107:1521/pdb1" driverClass="oracle.jdbc.driver.OracleDriver" password="Abc1234" userId="kcy_sys" >
+            <!-- 针对oracle数据库 -->
+            <property name="remarksReporting" value="true"/>
+            <!-- 针对mysql数据库 
+            <property name="useInformationSchema" value="true"></property>
+            -->
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 配置生成实体类的包名和位置 -->
+        <!-- 通过maven管理插件时targetProject的路径为绝对路径：D:\workspace_oxygen\mybatis3 -->
+        <!-- 通过自安装插件生成时的地址：mybatis3 -->
+        <javaModelGenerator targetPackage="com.sf.gis.idp.demand.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- 配置生成映射文件的包名和位置 -->
+        <!-- 通过maven管理插件时targetProject的路径为绝对路径：D:\workspace_oxygen\mybatis3 -->
+        <!-- 通过自安装插件生成时的地址：mybatis3 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- 配置生成mapper文件的包名和位置 -->
+        <!-- 通过maven管理插件时targetProject的路径为绝对路径：D:\workspace_oxygen\mybatis3 -->
+        <!-- 通过自安装插件生成时的地址：mybatis3 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sf.gis.idp.mapper.demand" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- 配置需要反向生成表的信息 -->
+        <table tableName="TB_GPS_JKPEXX" domainObjectName="GpsConfig"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>   
+    </context>
+</generatorConfiguration>

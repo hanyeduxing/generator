@@ -7,13 +7,13 @@
              defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8" />
         <property name="basePackage" value="com.sf.gis.qc" />
-        <property name="projectDir" value="D:\GITRoot\gis-lss-core-xjqc-80003818\gis-qc" />
+        <property name="projectDir" value="E:\GITRoot\gis-lss-core-xjqc-80003818\gis-qc" />
         <property name="modelDao" value="gis-qc-dao" />
         <property name="modelService" value="gis-qc-service" />
         <property name="modelWeb" value="gis-qc-web" />
         
         <property name="basePoolPackage" value="com.sf.gis.pool" />
-        <property name="projectPoolDir" value="D:\GITRoot\gis-lss-core-xjpools-80003818\app-pool-parent" />
+        <property name="projectPoolDir" value="E:\GITRoot\gis-lss-core-xjpools-80003818\app-pool-parent" />
         <property name="modelPoolDao" value="app-pool-dao" />
         <property name="modelPoolService" value="app-pool-service" />
         <property name="modelPoolWeb" value="app-pool-web" />

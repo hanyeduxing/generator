@@ -19,7 +19,7 @@ import lombok.ToString;
 @ApiModel(description = "${remarks}列表查询条件")
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ${modelName}Req extends BaseReq {
 
     <#list reqColumns  as col>

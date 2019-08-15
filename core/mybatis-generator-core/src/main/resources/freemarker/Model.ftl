@@ -18,7 +18,7 @@ import lombok.ToString;
 @ApiModel(description = "${remarks}")
 @Data
 @ToString
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ${modelName} extends BaseModel {
     
 
